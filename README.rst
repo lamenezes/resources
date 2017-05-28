@@ -10,9 +10,13 @@ How to install
 
     pip install reqset
 
-----------
-How to use
-----------
+-------------------
+Ideas on how to use
+-------------------
+
+Not all features stated in the following examples are implemented.
+This section serves as motivation for future functionalities.
+
 
 .. code:: python
 
@@ -24,10 +28,20 @@ How to use
         transport_class = FooTransport
 
 
-    class AnimalClient(reqset.Client):
+    class PageClient(reqset.Client):
         endpoint = 'http://api.com/v1/animals/'
 
-        owner = reqset.RelatedField(PersonClient, source_field='owner_id')
+        owner = reqset.RelatedField(
+            PersonClient,
+            source_field='owner_url',  # default is owner_id
+            auto_follow=True,  # default is False
+        )
+
+        comments = reqset.MultipleRelatedField(
+            CommentClient,
+            source_field='comments_url',
+            auto_follow=True,
+        )
 
 
     # GET / single
