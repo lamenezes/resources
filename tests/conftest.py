@@ -104,3 +104,8 @@ def gist_data():
 @pytest.fixture
 def fetch_url():
     return 'http://example.com/id/'
+
+
+@pytest.fixture
+def httpbin_url():
+    return 'http://httpbin.org/'
