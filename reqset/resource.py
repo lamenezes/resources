@@ -1,20 +1,20 @@
-from .manager import ClientManager
+from .manager import ResourceManager
 
 
-class ClientBase(type):
+class ResourceBase(type):
     def __new__(cls, name, bases, attrs):
         new_class = super().__new__(cls, name, bases, attrs)
-        parents = [b for b in bases if isinstance(b, ClientBase)]
+        parents = [b for b in bases if isinstance(b, ResourceBase)]
         if not parents:
             return new_class
 
-        new_class.objects = ClientManager(
+        new_class.objects = ResourceManager(
             endpoint=attrs.pop('endpoint'),
-            client=new_class,
+            resource=new_class,
             transport_class=attrs.pop('transport_class', None),
         )
         return new_class
 
 
-class Client(metaclass=ClientBase):
+class Resource(metaclass=ResourceBase):
     pass

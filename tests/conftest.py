@@ -1,18 +1,18 @@
 import pytest
 
-from reqset import Client
+from reqset import Resource
 
 
 @pytest.fixture
-def gist_client():
-    class GistClient(Client):
+def gist_resource():
+    class GistResource(Resource):
         endpoint = 'https://api.github.com/gists'
-    return GistClient
+    return GistResource
 
 
 @pytest.fixture
-def gist_client_manager(gist_client):
-    return gist_client.objects
+def gist_resource_manager(gist_resource):
+    return gist_resource.objects
 
 
 @pytest.fixture

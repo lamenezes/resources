@@ -1,1 +1,1 @@
-from .client import Client  # noqa
+from .resource import Resource  # noqa

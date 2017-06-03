@@ -1,6 +1,6 @@
-============
-Simple Model
-============
+======
+reqset
+======
 
 --------------
 How to install
@@ -23,22 +23,22 @@ This section serves as motivation for future functionalities.
     import reqset
 
 
-    class PersonClient(reqset.Client):
+    class PersonResource(reqset.Resource):
         endpoint = 'http://api.com/v1/persons/'
         transport_class = FooTransport
 
 
-    class PageClient(reqset.Client):
+    class PageResource(reqset.Resource):
         endpoint = 'http://api.com/v1/animals/'
 
         owner = reqset.RelatedField(
-            PersonClient,
+            PersonResource,
             source_field='owner_url',  # default is owner_id
             auto_follow=True,  # default is False
         )
 
         comments = reqset.MultipleRelatedField(
-            CommentClient,
+            CommentResource,
             source_field='comments_url',
             auto_follow=True,
         )
