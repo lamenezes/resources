@@ -11,7 +11,6 @@ class ResourceBase(type):
         new_class.objects = ResourceManager(
             endpoint=attrs.pop('endpoint'),
             resource=new_class,
-            transport_class=attrs.pop('transport_class', None),
         )
         return new_class
 
