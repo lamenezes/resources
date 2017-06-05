@@ -1,0 +1,56 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.16.4]
+      content_type: [application/json]
+    method: GET
+    uri: https://api.github.com/gists/522e0ee9dfa07d7a61651a22ce355590
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA+1Wy27bMBD8FYOnBnBCPfyQBBS991Sg7aVJYVDiymYqiQJJOUgE/3t3KSVNnDaO
+        Ux9zskVph7uzO0P2rDMVy9jGudZmnItWXayV23T5RaFrvlbWWT6PIggAUlmKYCmXYhEu5qGIogLi
+        +XyeBmzKSm1+2dUJsLhHQkTcvlbuNJgjFqIqicW+oh7kYNV2VbVXEvHxmJ9DSPQt7jqg2c1p0Dau
+        /t+8qGOqAsuynuUX1/6XFhpRAxLkl6bM3bb0JNq2UoVwSjf8WmyFLYxqqaxKNOtOrOmbz7j+9X7d
+        iJt/V9pZMIVuHDTOj5jbIEotmig6OGccgXmcp3GxjCSkcZonYRIHAmAJUiQzSAqZz0S8KNK05GMR
+        Vt1hgrM5lmO6BssAHIFSVBZoxnwemH+Jr6jASf7hrL9qJhMDrjPN5IvRtbJwYcDqagsf8Pfsqtmx
+        3W7K2i5HXliGuIRlgLBXguCiIFyeB/PzKPkWxNkszILZDySsa+XBbyQM/GIyCDQKAZPEHgWIgOyx
+        rMHJHBRCL04iO5KI32XK9E1Dm/Ss0mtFSfxp0aigJFgkaTxl2HQnzP7+ftEGo072+93xIfrT9mNM
+        0jAjiFcmcfSSHxGYfTQy+P1f1fBgYE9SL3VV6RtE2M/4qentb4KWNMbhdsN/1azfhIFxPdduA0ga
+        lrIjAshijwTzMb1355WShGKRcoPTdxR7fIzClKjlu54baLWH6/KHKTw2uSexiKXNWjTqzvvHsVgY
+        SxNJaR0b6mMwFraHNfKs40NQz1ujtqK4JUoMFKC2SPGbAPeiEW801+8kaCRcOVgJWZPevDmhvwwn
+        YXb5E4ccO63NLcsu+9EC3tV5f2q8q/OFC9yzyX5XZ82fkfIWdW7xHBnO6FDIRQLxMo6W+SKchbnE
+        Ey6I0lKE5SJKipmAPA5FgTIfLqKHrgkFXYlghe7sOn81c9oJbDKduFIqb6T+SUIF41OAhvGi+b/u
+        Ks9fXcwObWn/RrX7DVS28jVPDAAA
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['ETag, Link, X-GitHub-OTP, X-RateLimit-Limit,
+          X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes,
+          X-Poll-Interval']
+      Cache-Control: ['public, max-age=60, s-maxage=60']
+      Content-Encoding: [gzip]
+      Content-Security-Policy: [default-src 'none']
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Mon, 05 Jun 2017 02:46:10 GMT']
+      ETag: [W/"e142765e37bb80e2900f3a1fd3b2674c"]
+      Last-Modified: ['Thu, 01 Jun 2017 04:37:59 GMT']
+      Server: [GitHub.com]
+      Status: [200 OK]
+      Strict-Transport-Security: [max-age=31536000; includeSubdomains; preload]
+      Vary: [Accept, Accept-Encoding]
+      X-Content-Type-Options: [nosniff]
+      X-Frame-Options: [deny]
+      X-GitHub-Media-Type: [github.v3; format=json]
+      X-GitHub-Request-Id: ['8094:4056:47BA710:5B1ED75:5934C5F1']
+      X-RateLimit-Limit: ['60']
+      X-RateLimit-Remaining: ['57']
+      X-RateLimit-Reset: ['1496634197']
+      X-Runtime-rack: ['0.059365']
+      X-Served-By: [593010132f82159af0ded24b4932e109]
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 200, message: OK}
+version: 1

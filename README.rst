@@ -2,20 +2,13 @@
 reqset
 ======
 
---------------
-How to install
---------------
-
-.. code:: shell
-
-    pip install reqset
 
 -------------------
 Ideas on how to use
 -------------------
 
 Not all features stated in the following examples are implemented.
-This section serves as motivation for future functionalities.
+This section serves only as motivation for future functionalities.
 
 
 .. code:: python
@@ -25,7 +18,7 @@ This section serves as motivation for future functionalities.
 
     class PersonResource(reqset.Resource):
         endpoint = 'http://api.com/v1/persons/'
-        transport_class = FooTransport
+        client_class = MyLittleClient
 
 
     class PageResource(reqset.Resource):
@@ -49,8 +42,8 @@ This section serves as motivation for future functionalities.
     print(person.name)
 
     # GET / list
-    person_reqset = Person.objects.filter(age=18)  # request not made
-    for person in person_reqset:  # request made
+    person_reqset = Person.objects.filter(age=18)
+    for person in person_reqset:  # lazy request
         print(person.name)
 
     # POST

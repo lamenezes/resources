@@ -1,25 +1,32 @@
 from simple_model import model_builder
 
-from .transports.requests import RequestsTransport
+from .client import ResourceClient
 
 
 class ResourceManager:
-    def __init__(self, endpoint, resource, transport_class=None):
-        transport_class = transport_class or RequestsTransport
-        self.endpoint = endpoint
+    def __init__(self, endpoint, resource, client_class=ResourceClient):
         self.resource = resource
-        self.headers = {'content_type': 'application/json'}
-        self.transport = transport_class(headers=self.headers)
+        headers = {'content_type': 'application/json'}
+        self.client = client_class(endpoint=endpoint, headers=headers)
 
     @property
     def resource_class_name(self):
         return self.resource.__name__.replace('Resource', '')
 
-    def get(self, pk, **kwargs):
-        endpoint = '{}/{}'.format(self.endpoint, pk)
-        _, content = self.transport.request('GET', endpoint, **kwargs)
+    def _build_model(self, content):
         return model_builder(content, self.resource_class_name)
 
+    def get(self, pk, **kwargs):
+        return self.client.get(pk, **kwargs)
+
     def filter(self, **kwargs):
-        _, content = self.transport.request('GET', self.endpoint, **kwargs)
-        return model_builder(content, self.resource_class_name)
+        return self.client.fetch(**kwargs)
+
+    def create(self, **kwargs):
+        return self.client.post(**kwargs)
+
+    def update(self, pk, **kwargs):
+        return self.client.patch(pk, **kwargs)
+
+    def create_or_update(self, pk, **kwargs):
+        return self.client.put(pk, **kwargs)
