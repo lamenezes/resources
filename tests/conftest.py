@@ -1,6 +1,6 @@
 import pytest
 
-from reqset import Resource
+from django_resource import Resource
 
 
 @pytest.fixture

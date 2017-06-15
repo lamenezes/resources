@@ -7,7 +7,7 @@ from staty.exceptions import (
     UnauthorizedException,
 )
 
-from reqset.client import ResourceClient
+from django_resource.client import ResourceClient
 
 from .vcr import vcr
 

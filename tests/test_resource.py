@@ -1,4 +1,4 @@
-from reqset.resource import ResourceManager
+from django_resource.resource import ResourceManager
 
 
 def test_resource_construct(gist_resource):

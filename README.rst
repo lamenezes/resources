@@ -1,6 +1,6 @@
-======
-reqset
-======
+===============
+django-resource
+===============
 
 
 -------------------
@@ -13,24 +13,24 @@ This section serves only as motivation for future functionalities.
 
 .. code:: python
 
-    import reqset
+    from django_resource import resource
 
 
-    class PersonResource(reqset.Resource):
+    class PersonResource(resource.Resource):
         endpoint = 'http://api.com/v1/persons/'
         client_class = MyLittleClient
 
 
-    class PageResource(reqset.Resource):
+    class PageResource(resource.Resource):
         endpoint = 'http://api.com/v1/animals/'
 
-        owner = reqset.RelatedField(
+        owner = resource.RelatedField(
             PersonResource,
             source_field='owner_url',  # default is owner_id
             auto_follow=True,  # default is False
         )
 
-        comments = reqset.MultipleRelatedField(
+        comments = resource.MultipleRelatedField(
             CommentResource,
             source_field='comments_url',
             auto_follow=True,
