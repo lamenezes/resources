@@ -23,6 +23,11 @@ def mock_client(client):
     return client
 
 
+@pytest.fixture
+def mock_response():
+    return mock.Mock(text='errow')
+
+
 @vcr.use_cassette()
 def test_resource_client_request(client, gist_id):
     gist = client.get(gist_id)
@@ -87,7 +92,11 @@ def test_resource_client_requests_with_pk(method, verb, mock_client, gist_id):
     (range(500, 531), ServerErrorException),
     ((401, 403), UnauthorizedException),
 ))
-def test_resource_client_raise_for_status(status_codes, exception, mock_client):
+def test_resource_client_raise_for_status(status_codes, exception, mock_client, mock_response):
     for status_code in status_codes:
-        with pytest.raises(exception):
-            mock_client.raise_for_status(None, status_code)
+        with pytest.raises(exception) as exc:
+            mock_client.raise_for_status(mock_response, status_code)
+
+        assert exc.value.response == mock_response
+        assert str(status_code) in str(exc)
+        assert mock_response.text in str(exc)
