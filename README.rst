@@ -2,6 +2,8 @@
 django-resource
 ===============
 
+|PyPI latest| |CI Status|
+
 REST API's Resources for django 
 
 -------------------
@@ -56,3 +58,9 @@ This section serves only as motivation for future functionalities.
 
     # PUT
     person = Person.objects.update_or_create(name='John Doe', age=30)
+
+.. |PyPI latest| image:: https://img.shields.io/pypi/v/django-resource.svg?maxAge=2592000
+    :target: https://github.com/lamenezes/django-resource
+
+.. |CI Status| image:: https://travis-ci.org/lamenezes/django-resource.svg?branch=master
+    :target: https://travis-ci.org/lamenezes/django-resource
