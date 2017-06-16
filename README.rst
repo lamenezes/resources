@@ -2,6 +2,7 @@
 django-resource
 ===============
 
+REST API's Resources for django 
 
 -------------------
 Ideas on how to use
