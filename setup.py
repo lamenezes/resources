@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-resource',
-    version='0.0.1',
+    version='0.0.2',
     description="REST API's Resources for django",
     url='https://github.com/lamenezes/django-resource',
     download_url='https://github.com/lamenezes/django-resource/releases',
