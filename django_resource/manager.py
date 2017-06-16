@@ -14,19 +14,24 @@ class ResourceManager:
         return self.resource.__name__.replace('Resource', '')
 
     def _build_model(self, content):
-        return model_builder(content, self.resource_class_name)
+        return model_builder(data=content, class_name=self.resource_class_name)
 
     def get(self, pk, **kwargs):
-        return self.client.get(pk, **kwargs)
+        resource = self.client.get(pk, **kwargs)
+        return self._build_model(resource)
 
     def filter(self, **kwargs):
-        return self.client.fetch(**kwargs)
+        content = self.client.fetch(**kwargs)
+        return [self._build_model(resource) for resource in content]
 
     def create(self, **kwargs):
-        return self.client.post(**kwargs)
+        resource = self.client.post(**kwargs)
+        return self._build_model(resource)
 
     def update(self, pk, **kwargs):
-        return self.client.patch(pk, **kwargs)
+        content = self.client.patch(pk, **kwargs)
+        return self._build_model(content)
 
     def create_or_update(self, pk, **kwargs):
-        return self.client.put(pk, **kwargs)
+        content = self.client.put(pk, **kwargs)
+        return self._build_model(content)
