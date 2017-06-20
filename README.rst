@@ -4,7 +4,7 @@ django-resource
 
 |PyPI latest| |CI Status|
 
-REST API's Resources for django 
+REST API's Resources for django
 
 -------------------
 Ideas on how to use
@@ -21,13 +21,27 @@ This section serves only as motivation for future functionalities.
 
     class PersonResource(resource.Resource):
         class Meta:
-            endpoint = 'http://api.com/v1/persons/'
+            endpoints = {
+                'delete': 'http://api.com/v1/persons/{}/'
+                'filter': 'http://api.com/v1/persons/'
+                'get': 'http://api.com/v1/persons/{}/'
+                'patch': 'http://api.com/v1/persons/{}/'
+                'post': 'http://api.com/v1/persons/'
+                'put': 'http://api.com/v1/persons/'
+            }
             client_class = MyLittleClient
 
 
     class PageResource(resource.Resource):
         class Meta:
-            endpoint = 'http://api.com/v1/animals/'
+            endpoints = {
+                'delete': 'http://api.com/v1/pages/{}/'
+                'filter': 'http://api.com/v1/pages/'
+                'get': 'http://api.com/v1/pages/{}/'
+                'patch': 'http://api.com/v1/pages/{}/'
+                'post': 'http://api.com/v1/pages/'
+                'put': 'http://api.com/v1/pages/'
+            }
 
         owner = resource.RelatedField(
             PersonResource,
