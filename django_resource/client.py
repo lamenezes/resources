@@ -13,14 +13,14 @@ class ResourceClient:
         self.session = requests.Session()
         self.session.headers.update(headers)
 
-    def raise_for_status(self, response, status_code, *args, **kwargs):
-        message = '{}: {}'.format(status_code, response.text)
+    def raise_for_status(self, response, status_code):
+        message = '{} - {}'.format(status_code, response.text)
         if status_code in (401, 403):
-            raise UnauthorizedException(message, *args, response=response, **kwargs)
+            raise UnauthorizedException(message, response=response)
         if status_code in range(400, 500):
-            raise ClientErrorException(message, *args, response=response, **kwargs)
+            raise ClientErrorException(message, response=response)
         if status_code in range(500, 600):
-            raise ServerErrorException(message, *args, response=response, **kwargs)
+            raise ServerErrorException(message, response=response)
 
     def request(self, method, endpoint, **kwargs):
         method = method.lower()
