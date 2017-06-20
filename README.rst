@@ -20,12 +20,14 @@ This section serves only as motivation for future functionalities.
 
 
     class PersonResource(resource.Resource):
-        endpoint = 'http://api.com/v1/persons/'
-        client_class = MyLittleClient
+        class Meta:
+            endpoint = 'http://api.com/v1/persons/'
+            client_class = MyLittleClient
 
 
     class PageResource(resource.Resource):
-        endpoint = 'http://api.com/v1/animals/'
+        class Meta:
+            endpoint = 'http://api.com/v1/animals/'
 
         owner = resource.RelatedField(
             PersonResource,

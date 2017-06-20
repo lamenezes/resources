@@ -7,8 +7,8 @@ from staty.exceptions import (
 
 
 class ResourceClient:
-    def __init__(self, endpoint, headers=None):
-        self._endpoint = endpoint
+    def __init__(self, endpoints, headers=None):
+        self._endpoints = endpoints
         headers = headers or {'content_type': 'application/json'}
         self.session = requests.Session()
         self.session.headers.update(headers)
@@ -31,28 +31,33 @@ class ResourceClient:
             return response.json()
         return response.text()
 
-    def get_endpoint(self, pk=None):
+    def get_endpoint(self, method, pk=None):
+        endpoint = self._endpoints[method]
         if pk is None:
-            return self._endpoint
+            return endpoint
 
-        return '{}/{}'.format(self._endpoint, pk)
+        return '{}/{}'.format(endpoint, pk)
 
     def get(self, pk, **kwargs):
-        endpoint = self.get_endpoint(pk)
+        endpoint = self.get_endpoint('get', pk)
         return self.request('GET', endpoint, **kwargs)
 
-    def fetch(self, **kwargs):
-        endpoint = self.get_endpoint()
+    def filter(self, **kwargs):
+        endpoint = self.get_endpoint('filter')
         return self.request('GET', endpoint, **kwargs)
 
-    def create(self, **kwargs):
-        endpoint = self.get_endpoint()
+    def post(self, **kwargs):
+        endpoint = self.get_endpoint('post')
         return self.request('POST', endpoint, **kwargs)
 
     def patch(self, pk, **kwargs):
-        endpoint = self.get_endpoint(pk)
+        endpoint = self.get_endpoint('patch', pk)
         return self.request('PATCH', endpoint, **kwargs)
 
-    def create_or_update(self, **kwargs):
-        endpoint = self.get_endpoint()
+    def put(self, **kwargs):
+        endpoint = self.get_endpoint('put')
+        return self.request('PUT', endpoint, **kwargs)
+
+    def delete(self, pk, **kwargs):
+        endpoint = self.get_endpoint('delete', pk)
         return self.request('PUT', endpoint, **kwargs)

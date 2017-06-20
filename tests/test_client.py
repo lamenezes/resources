@@ -14,7 +14,7 @@ from .vcr import vcr
 
 @pytest.fixture
 def client(gist_resource):
-    return ResourceClient(gist_resource.endpoint)
+    return ResourceClient(gist_resource._meta.endpoints)
 
 
 @pytest.fixture
@@ -44,47 +44,51 @@ def test_resource_client_request_response_redirect(client, gist_id):
     assert response == 'birl'
 
 
-def test_resource_client_get_endpoint(mock_client):
-    assert mock_client.get_endpoint() == mock_client._endpoint
+@pytest.mark.parametrize('method', ('filter', 'post', 'put'))
+def test_resource_client_get_endpoint(method, mock_client):
+    assert mock_client.get_endpoint(method) == mock_client._endpoints[method]
 
 
-def test_resource_client_get_endpoint_with_pk(mock_client, gist_id):
-    endpoint = mock_client.get_endpoint(gist_id)
-    assert mock_client._endpoint in endpoint
+@pytest.mark.parametrize('method', ('delete', 'get', 'patch'))
+def test_resource_client_get_endpoint_with_pk(method, mock_client, gist_id):
+    endpoint = mock_client.get_endpoint(method, gist_id)
+    assert mock_client._endpoints[method] in endpoint
     assert gist_id in endpoint
 
 
 def test_resource_client_get(mock_client, gist_id):
     mock_client.get(gist_id)
 
-    endpoint = mock_client.get_endpoint(gist_id)
+    endpoint = mock_client.get_endpoint('get', gist_id)
     mock_client.request.assert_called_with('GET', endpoint)
 
 
-@pytest.mark.parametrize(('method', 'verb'), (
-    ('fetch', 'GET'),
-    ('create', 'POST'),
-    ('create_or_update', 'PUT'),
+@pytest.mark.parametrize(('method_name', 'verb'), (
+    ('filter', 'GET'),
+    ('post', 'POST'),
+    ('put', 'PUT'),
 ))
-def test_resource_client_requests_without_pk(method, verb, mock_client):
-    method = getattr(mock_client, method)
+def test_resource_client_requests_without_pk(method_name, verb, mock_client):
+    method = getattr(mock_client, method_name)
 
     method()
 
-    mock_client.request.assert_called_with(verb, mock_client.get_endpoint())
+    endpoint = mock_client.get_endpoint(method_name)
+    mock_client.request.assert_called_with(verb, endpoint)
 
 
-@pytest.mark.parametrize(('method', 'verb'), (
+@pytest.mark.parametrize(('method_name', 'verb'), (
     ('get', 'GET'),
     ('patch', 'PATCH'),
 ))
-def test_resource_client_requests_with_pk(method, verb, mock_client, gist_id):
-    method = getattr(mock_client, method)
+def test_resource_client_requests_with_pk(method_name, verb, mock_client, gist_id):
+    method = getattr(mock_client, method_name)
     data = {'foo': 'bar'}
 
     method(gist_id, **data)
 
-    mock_client.request.assert_called_with(verb, mock_client.get_endpoint(gist_id), **data)
+    endpoint = mock_client.get_endpoint(method_name, gist_id)
+    mock_client.request.assert_called_with(verb, endpoint, **data)
 
 
 @pytest.mark.parametrize(('status_codes', 'exception'), (

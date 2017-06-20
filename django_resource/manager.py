@@ -1,17 +1,17 @@
 from simple_model import model_builder
 
-from .client import ResourceClient
-
 
 class ResourceManager:
-    def __init__(self, endpoint, resource, client_class=ResourceClient):
-        self.resource = resource
-        headers = {'content_type': 'application/json'}
-        self.client = client_class(endpoint=endpoint, headers=headers)
+    def __init__(self, resource_class):
+        self._resource_class = resource_class
+
+    @property
+    def client(self):
+        return self._resource_class._meta.client
 
     @property
     def resource_class_name(self):
-        return self.resource.__name__.replace('Resource', '')
+        return self._resource_class.__name__.replace('Resource', '')
 
     def _build_model(self, content):
         return model_builder(data=content, class_name=self.resource_class_name)
@@ -21,8 +21,11 @@ class ResourceManager:
         return self._build_model(resource)
 
     def filter(self, **kwargs):
-        content = self.client.fetch(**kwargs)
+        content = self.client.filter(**kwargs)
         return [self._build_model(resource) for resource in content]
+
+    def all(self):
+        return self.filter()
 
     def create(self, **kwargs):
         resource = self.client.post(**kwargs)

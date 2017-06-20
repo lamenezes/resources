@@ -6,7 +6,15 @@ from django_resource import Resource
 @pytest.fixture
 def gist_resource():
     class GistResource(Resource):
-        endpoint = 'https://api.github.com/gists'
+        class Meta:
+            endpoints = {
+                'delete': 'https://api.github.com/gists/{}/',
+                'filter': 'https://api.github.com/gists/public',
+                'get': 'https://api.github.com/gists',
+                'patch': 'https://api.github.com/gists/{}/',
+                'post': 'https://api.github.com/gists',
+                'put': 'https://api.github.com/gists',
+            }
     return GistResource
 
 
