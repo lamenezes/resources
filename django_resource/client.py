@@ -60,4 +60,4 @@ class ResourceClient:
 
     def delete(self, pk, **kwargs):
         endpoint = self.get_endpoint('delete', pk)
-        return self.request('PUT', endpoint, **kwargs)
+        return self.request('DELETE', endpoint, **kwargs)

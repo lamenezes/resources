@@ -78,6 +78,7 @@ def test_resource_client_requests_without_pk(method_name, verb, mock_client):
 
 
 @pytest.mark.parametrize(('method_name', 'verb'), (
+    ('delete', 'DELETE'),
     ('get', 'GET'),
     ('patch', 'PATCH'),
 ))
