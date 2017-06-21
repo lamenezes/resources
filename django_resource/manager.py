@@ -16,8 +16,8 @@ class ResourceManager:
     def _build_model(self, content):
         return model_builder(data=content, class_name=self.resource_class_name)
 
-    def get(self, pk, **kwargs):
-        resource = self.client.get(pk, **kwargs)
+    def get(self, pk):
+        resource = self.client.get(pk)
         return self._build_model(resource)
 
     def filter(self, **kwargs):
@@ -38,3 +38,6 @@ class ResourceManager:
     def create_or_update(self, pk, **kwargs):
         content = self.client.put(pk, **kwargs)
         return self._build_model(content)
+
+    def delete(self, pk):
+        self.client.delete(pk)
