@@ -1,6 +1,6 @@
 import pytest
 
-from django_resource import Resource
+from resources import Resource
 
 
 @pytest.fixture
@@ -20,7 +20,7 @@ def gist_resource():
 
 @pytest.fixture
 def gist_resource_manager(gist_resource):
-    return gist_resource.objects
+    return gist_resource.resources
 
 
 @pytest.fixture

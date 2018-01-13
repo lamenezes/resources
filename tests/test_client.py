@@ -7,7 +7,7 @@ from staty.exceptions import (
     UnauthorizedException,
 )
 
-from django_resource.client import ResourceClient
+from resources.client import ResourceClient
 
 from .vcr import vcr
 
@@ -52,7 +52,7 @@ def test_resource_client_get_endpoint(method, mock_client):
 @pytest.mark.parametrize('method', ('delete', 'get', 'patch'))
 def test_resource_client_get_endpoint_with_pk(method, mock_client, gist_id):
     endpoint = mock_client.get_endpoint(method, gist_id)
-    assert mock_client._endpoints[method] in endpoint
+    assert mock_client._endpoints[method][:-3] in endpoint
     assert gist_id in endpoint
 
 
@@ -63,18 +63,27 @@ def test_resource_client_get(mock_client, gist_id):
     mock_client.request.assert_called_with('GET', endpoint)
 
 
+def test_resource_client_requests_post(mock_client):
+    kwargs = {'foo': 'oo', 'bar': 'ar'}
+
+    mock_client.post(**kwargs)
+
+    endpoint = mock_client.get_endpoint('post')
+    mock_client.request.assert_called_with('POST', endpoint, json=kwargs)
+
+
 @pytest.mark.parametrize(('method_name', 'verb'), (
     ('filter', 'GET'),
-    ('post', 'POST'),
     ('put', 'PUT'),
 ))
 def test_resource_client_requests_without_pk(method_name, verb, mock_client):
+    kwargs = {'foo': 'oo', 'bar': 'ar'}
     method = getattr(mock_client, method_name)
 
-    method()
+    method(**kwargs)
 
     endpoint = mock_client.get_endpoint(method_name)
-    mock_client.request.assert_called_with(verb, endpoint)
+    mock_client.request.assert_called_with(verb, endpoint, **kwargs)
 
 
 @pytest.mark.parametrize(('method_name', 'verb'), (
@@ -89,7 +98,8 @@ def test_resource_client_requests_with_pk(method_name, verb, mock_client, gist_i
     method(gist_id, **data)
 
     endpoint = mock_client.get_endpoint(method_name, gist_id)
-    mock_client.request.assert_called_with(verb, endpoint, **data)
+    expected_kwargs = {'json': data} if verb == 'PATCH' else data
+    mock_client.request.assert_called_with(verb, endpoint, **expected_kwargs)
 
 
 @pytest.mark.parametrize(('status_codes', 'exception'), (

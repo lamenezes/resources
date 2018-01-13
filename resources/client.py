@@ -9,7 +9,8 @@ from staty.exceptions import (
 class ResourceClient:
     def __init__(self, endpoints, headers=None):
         self._endpoints = endpoints
-        headers = headers or {'content_type': 'application/json'}
+        headers = headers or {}
+        headers.update({'content_type': 'application/json'})
         self.session = requests.Session()
         self.session.headers.update(headers)
 
@@ -36,6 +37,9 @@ class ResourceClient:
         if pk is None:
             return endpoint
 
+        if '{}' in endpoint:
+            return endpoint.format(pk)
+
         return '{}/{}'.format(endpoint, pk)
 
     def get(self, pk, **kwargs):
@@ -48,11 +52,11 @@ class ResourceClient:
 
     def post(self, **kwargs):
         endpoint = self.get_endpoint('post')
-        return self.request('POST', endpoint, **kwargs)
+        return self.request('POST', endpoint, json=kwargs)
 
     def patch(self, pk, **kwargs):
         endpoint = self.get_endpoint('patch', pk)
-        return self.request('PATCH', endpoint, **kwargs)
+        return self.request('PATCH', endpoint, json=kwargs)
 
     def put(self, **kwargs):
         endpoint = self.get_endpoint('put')

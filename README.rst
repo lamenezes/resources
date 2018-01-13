@@ -4,7 +4,7 @@ django-resource
 
 |PyPI latest| |CI Status|
 
-REST API's Resources for django
+Resource centered REST API clients
 
 -------------------
 Ideas on how to use
@@ -16,23 +16,15 @@ This section serves only as motivation for future functionalities.
 
 .. code:: python
 
-    from django_resource import resource
+    import resources
 
 
-    class PersonResource(resource.Resource):
+    class PersonResource(resources.Resource):
         class Meta:
-            endpoints = {
-                'delete': 'http://api.com/v1/persons/{}/'
-                'filter': 'http://api.com/v1/persons/'
-                'get': 'http://api.com/v1/persons/{}/'
-                'patch': 'http://api.com/v1/persons/{}/'
-                'post': 'http://api.com/v1/persons/'
-                'put': 'http://api.com/v1/persons/'
-            }
-            client_class = MyLittleClient
+            base_endpoint = 'http://api.com/v1/persons/'
 
 
-    class PageResource(resource.Resource):
+    class PageResource(resources.Resource):
         class Meta:
             endpoints = {
                 'delete': 'http://api.com/v1/pages/{}/'
@@ -43,16 +35,15 @@ This section serves only as motivation for future functionalities.
                 'put': 'http://api.com/v1/pages/'
             }
 
-        owner = resource.RelatedField(
+        owner = resources.RelatedField(
             PersonResource,
             source_field='owner_url',  # default is owner_id
             auto_follow=True,  # default is False
         )
 
-        comments = resource.MultipleRelatedField(
+        comments = resources.MultipleRelatedField(
             CommentResource,
             source_field='comments_url',
-            auto_follow=True,
         )
 
 
@@ -74,6 +65,7 @@ This section serves only as motivation for future functionalities.
 
     # PUT
     person = Person.objects.update_or_create(name='John Doe', age=30)
+
 
 .. |PyPI latest| image:: https://img.shields.io/pypi/v/django-resource.svg?maxAge=2592000
     :target: https://github.com/lamenezes/django-resource

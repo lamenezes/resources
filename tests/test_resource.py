@@ -1,11 +1,11 @@
 import pytest
 
-from django_resource.resource import Resource, ResourceManager
+from resources.resource import Resource, ResourceManager
 
 
 def test_resource_construct(gist_resource):
-    assert gist_resource.objects
-    assert isinstance(gist_resource.objects, ResourceManager)
+    assert gist_resource.resources
+    assert isinstance(gist_resource.resources, ResourceManager)
 
 
 def test_resource_construct_without_meta(gist_resource):
