@@ -5,7 +5,7 @@ with open('README.rst') as f:
 
 setup(
     name='resources',
-    version='0.0.1',
+    version='0.0.0',
     description="Resource centered REST API clients",
     url='https://github.com/lamenezes/resource',
     download_url='https://github.com/lamenezes/resource/releases',
